@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Our Story by Nissi & Kaylee</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Georgia', serif;
+      background: #f4f1e9;
+      text-align: center;
+    }
+
+    /* Door styling */
+   .door {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: url('libdoor.png') center center / cover no-repeat;
+  cursor: pointer;
+  color: white;
+  font-size: 3.5em;
+  font-weight: bold;
+  text-shadow: 3px 3px 8px black;
+  animation: pulse 2s infinite;
+  border: 12px solid #4b2e2e; /* door frame */
+  box-shadow: inset 0 0 40px rgba(0,0,0,0.7), 0 0 30px rgba(0,0,0,0.8);
+  background-size: cover;       /* ensures proper aspect ratio */
+  background-position: center;  /* keeps image centered */
+}
+
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+
+    /* Library shelf */
+    .library {
+      display: none;
+      padding: 40px;
+    }
+    .shelf {
+      background: url('bookshel.png') no-repeat center center/cover;
+      padding: 40px;
+      margin: 20px auto;
+      width: 90%;
+      height: 600px;
+      display: flex;
+      justify-content: space-evenly;
+      align-items: flex-end;
+    }
+
+    /* Book styling */
+    .book {
+      width: 140px;
+      height: 200px;
+      background: url('Copilot_20260913_150659.png') no-repeat center center/cover;
+      cursor: pointer;
+      border-radius: 5px;
+      box-shadow: 0 8px 15px rgba(0,0,0,0.4);
+      transition: transform 0.3s ease;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      color: white;
+      font-weight: bold;
+      padding-bottom: 10px;
+    }
+    .book:hover {
+      transform: scale(1.1) rotate(-2deg);
+    }
+    /* Coming soon covers */
+    #book2 { background: linear-gradient(to bottom, #dc143c, #8b0000); } /* cherry red */
+    #book3 { background: linear-gradient(to bottom, purple, indigo); }
+    #book4 { background: linear-gradient(to bottom, indigo, #dc143c); }
+
+    /* Reader styling */
+    .reader {
+      display: none;
+      margin: 40px auto;
+      width: 80%;
+      background: purple;
+      border-radius: 10px;
+      padding: 20px;
+      background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200"><text x="10" y="50" font-size="40" fill="red">❤️📚🎓</text></svg>');
+      background-repeat: repeat;
+    }
+    .book-view {
+      display: flex;
+      justify-content: center;
+      perspective: 1500px;
+    }
+    .page {
+      width: 45%;
+      height: 450px;
+      background: #fff8dc;
+      margin: 10px;
+      padding: 20px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+      border: 1px solid #ccc;
+      line-height: 1.6;
+      text-align: left;
+      transition: transform 0.8s ease;
+    }
+
+    /* Controls */
+    .controls {
+      margin-top: 20px;
+      text-align: center;
+    }
+    button {
+      padding: 10px 20px;
+      margin: 5px;
+      cursor: pointer;
+      border: none;
+      border-radius: 5px;
+      background: #8b4513;
+      color: white;
+      font-size: 1em;
+      transition: background 0.3s ease;
+    }
+    button:hover {
+      background: #a0522d;
+    }
+  </style>
+</head>
+<body>
+  <!-- Door -->
+  <div class="door" id="door">🚪 Enter Our Story</div>
+
+  <!-- Library -->
+  <div class="library" id="library">
+    <h1>📚 Our Story Shelf</h1>
+    <div class="shelf">
+      <div class="book" id="book1">Book 1</div>
+      <div class="book" id="book2">Book 2</div>
+      <div class="book" id="book3">Book 3</div>
+      <div class="book" id="book4">Book 4</div>
+    </div>
+  </div>
+
+  <!-- Reader -->
+  <div class="reader" id="reader">
+    <div class="book-view">
+      <div class="page left"></div>
+      <div class="page right"></div>
+    </div>
+    <div class="controls">
+      <button id="prevPage">⬅ Back</button>
+      <button id="nextPage">Next ➡</button>
+      <button id="saveProgress">Save Progress</button>
+      <button id="closeBook">Close Book</button>
+    </div>
+  </div>
+
+  <script>
+    const door = document.getElementById("door");
+    const library = document.getElementById("library");
+    const book1 = document.getElementById("book1");
+    const reader = document.getElementById("reader");
+    const leftPage = document.querySelector(".left");
+    const rightPage = document.querySelector(".right");
+    const nextPageBtn = document.getElementById("nextPage");
+    const prevPageBtn = document.getElementById("prevPage");
+    const saveBtn = document.getElementById("saveProgress");
+    const closeBtn = document.getElementById("closeBook");
+
+    const storyPages = [
+      "The story introduces us to our two main characters Nissi the Senior and Kaylee the junior year student both regular high school students learning to navigate through teen life while dealing with school and everyday life. Nissi and Kaylee had never talked before but little did they know one call was going to change their lives forever. Nissi was on a call with his friend Simba and his girlfriend. They added a girl Nissi had thought was cute in the past, but he knew his friend Nolan wanted a girlfriend, so he put his feelings aside to help Nolan.",
+      "He starts trying to get them together. One thing leads to the other, Nissi and Kaylee start texting and Nissi is falling for her more and more but keeps neglecting it because Nolan now wants Kaylee.",
+      "As we go further Nissi and Kaylee now hb and hg. Nissi looks out for Kaylee, gets worried about her. Kaylee still doesn’t show any interest in Nissi and starts moving to Nolan.",
+      "Nolan starts flexing to Simba and Nissi his texts with Kaylee but Nissi always gets jealous and mad at how Nolan doesn’t value her. Time goes on, Nissi sees that his jealousy might ruin Kaylee’s happiness.",
+      "He bottles his emotions and tries to push her away but keeps failing. One day his other hg tells him her friend likes him. Nissi sees this as a distraction from Kaylee and texts her.",
+      "Two days later the girl immediately asks him to be her boyfriend. Nissi is taken aback by this but agrees in the heat of the moment. Nissi starts dating her.",
+      "During this he realises he made a mistake. The girl barely talks to him, she is always out. People tell him she’s cheating. Nissi sees they aren’t right.",
+      "Nissi breaks up with her on the 21st of May. On the 22nd he tells Kaylee how he felt and she says she likes him too. The next day they start dating but fate had other plans.",
+      "To be continued..."
+    ];
+
+    let currentPage = 0;
+
+    if(localStorage.getItem("progress")) {
+      currentPage = parseInt(localStorage.getItem("progress"));
+    }
+
+    function showSpread() {
+      leftPage.textContent = storyPages[currentPage] || "";
+      rightPage.textContent = storyPages[currentPage+1] || "";
+    }
+
+    door.onclick = () => {
+      door.style.display = "none";
+      library.style.display = "block";
+    };
+
+    book1.onclick = () => {
+      library.style.display = "none";
+      reader.style.display = "block";
+      showSpread();
+    };
+
+    nextPageBtn.onclick = () => {
+      if (currentPage < storyPages.length - 2) {
+        currentPage += 2;
+        showSpread();
+      }
+    };
+
+    prevPageBtn.onclick = () => {
+      if (currentPage > 0) {
+        currentPage -= 2;
+        showSpread();
+      }
+    };
+
+    saveBtn.onclick = () => {
+      localStorage.setItem("progress", currentPage);
+      alert("Progress saved!");
+    };
+
+    closeBtn.onclick = () => {
+      reader.style.display
+      reader.style.display = "none";
+      library.style.display = "block";
+    };
+  </script>
+</body>
+</html>

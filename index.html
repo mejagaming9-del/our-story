@@ -6,31 +6,28 @@
   <style>
     body {
       margin: 0;
-      font-family: 'Georgia', serif;
+      font-family: "Times New Roman", "Cormorant Garamond", serif;
       background: #f4f1e9;
       text-align: center;
     }
 
     /* Door styling */
-   .door {
-  height: 100vh;
-  width: 100vw;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: url('libdoor.png') center center / cover no-repeat;
-  cursor: pointer;
-  color: white;
-  font-size: 3.5em;
-  font-weight: bold;
-  text-shadow: 3px 3px 8px black;
-  animation: pulse 2s infinite;
-  border: 12px solid #4b2e2e; /* door frame */
-  box-shadow: inset 0 0 40px rgba(0,0,0,0.7), 0 0 30px rgba(0,0,0,0.8);
-  background-size: cover;       /* ensures proper aspect ratio */
-  background-position: center;  /* keeps image centered */
-}
-
+    .door {
+      height: 100vh;
+      width: 100vw;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: url('libdoor.png') center center / cover no-repeat;
+      cursor: pointer;
+      color: white;
+      font-size: 3.5em;
+      font-weight: bold;
+      text-shadow: 3px 3px 8px black;
+      animation: pulse 2s infinite;
+      border: 12px solid #4b2e2e;
+      box-shadow: inset 0 0 40px rgba(0,0,0,0.7), 0 0 30px rgba(0,0,0,0.8);
+    }
 
     @keyframes pulse {
       0% { transform: scale(1); }
@@ -44,7 +41,7 @@
       padding: 40px;
     }
     .shelf {
-      background: url('bookshel.png') no-repeat center center/cover;
+      background: url('bookshel.png') center center / cover no-repeat;
       padding: 40px;
       margin: 20px auto;
       width: 90%;
@@ -58,7 +55,7 @@
     .book {
       width: 140px;
       height: 200px;
-      background: url('Copilot_20260913_150659.png') no-repeat center center/cover;
+      background: url('Copilot_20260913_150659.png') center center / cover no-repeat;
       cursor: pointer;
       border-radius: 5px;
       box-shadow: 0 8px 15px rgba(0,0,0,0.4);
@@ -70,13 +67,7 @@
       font-weight: bold;
       padding-bottom: 10px;
     }
-    .book:hover {
-      transform: scale(1.1) rotate(-2deg);
-    }
-    /* Coming soon covers */
-    #book2 { background: linear-gradient(to bottom, #dc143c, #8b0000); } /* cherry red */
-    #book3 { background: linear-gradient(to bottom, purple, indigo); }
-    #book4 { background: linear-gradient(to bottom, indigo, #dc143c); }
+    .book:hover { transform: scale(1.1) rotate(-2deg); }
 
     /* Reader styling */
     .reader {
@@ -86,38 +77,32 @@
       background: purple;
       border-radius: 10px;
       padding: 20px;
-      background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200"><text x="10" y="50" font-size="40" fill="red">❤️📚🎓</text></svg>');
-      background-repeat: repeat;
     }
-   .book-view {
-  display: flex;
-  justify-content: center;
-  perspective: 1500px;
-  background: url('bookopen.png') center center / contain no-repeat;
-  width: 100%;
-  height: 500px; /* adjust to match your image height */
-  position: relative;
-}
-
-.page {
-  width: 45%;
-  height: 100%;
-  background: transparent; /* let the book image show */
-  margin: 10px;
-  padding: 20px;
-  line-height: 1.6;
-  text-align: left;
-  color: #2b1d0e; /* dark brown text for realism */
-  font-size: 1.1em;
-  overflow-y: auto; /* scroll if text is too long */
-}
-
+    .book-view {
+      position: relative;
+      width: 100%;
+      max-width: 900px;
+      height: 600px;
+      margin: 0 auto;
+      background: url('bookopen.png') center center / contain no-repeat;
+    }
+    .page {
+      position: absolute;
+      top: 55px;
+      width: 40%;
+      height: 70%;
+      background: transparent;
+      padding: 25px;
+      line-height: 1.8;
+      color: #2b1d0e;
+      font-size: 1.3em;
+      overflow: hidden; /* no scrolling */
+    }
+    .page.left { left: 50px; text-align: left; }
+    .page.right { right: 50px; text-align: left; }
 
     /* Controls */
-    .controls {
-      margin-top: 20px;
-      text-align: center;
-    }
+    .controls { margin-top: 20px; text-align: center; }
     button {
       padding: 10px 20px;
       margin: 5px;
@@ -129,9 +114,7 @@
       font-size: 1em;
       transition: background 0.3s ease;
     }
-    button:hover {
-      background: #a0522d;
-    }
+    button:hover { background: #a0522d; }
   </style>
 </head>
 <body>
@@ -175,16 +158,36 @@
     const saveBtn = document.getElementById("saveProgress");
     const closeBtn = document.getElementById("closeBook");
 
+    // Story split into ~5 lines per page
     const storyPages = [
-      "The story introduces us to our two main characters Nissi the Senior and Kaylee the junior year student both regular high school students learning to navigate through teen life while dealing with school and everyday life. Nissi and Kaylee had never talked before but little did they know one call was going to change their lives forever. Nissi was on a call with his friend Simba and his girlfriend. They added a girl Nissi had thought was cute in the past, but he knew his friend Nolan wanted a girlfriend, so he put his feelings aside to help Nolan.",
-      "He starts trying to get them together. One thing leads to the other, Nissi and Kaylee start texting and Nissi is falling for her more and more but keeps neglecting it because Nolan now wants Kaylee.",
-      "As we go further Nissi and Kaylee now hb and hg. Nissi looks out for Kaylee, gets worried about her. Kaylee still doesn’t show any interest in Nissi and starts moving to Nolan.",
-      "Nolan starts flexing to Simba and Nissi his texts with Kaylee but Nissi always gets jealous and mad at how Nolan doesn’t value her. Time goes on, Nissi sees that his jealousy might ruin Kaylee’s happiness.",
-      "He bottles his emotions and tries to push her away but keeps failing. One day his other hg tells him her friend likes him. Nissi sees this as a distraction from Kaylee and texts her.",
-      "Two days later the girl immediately asks him to be her boyfriend. Nissi is taken aback by this but agrees in the heat of the moment. Nissi starts dating her.",
-      "During this he realises he made a mistake. The girl barely talks to him, she is always out. People tell him she’s cheating. Nissi sees they aren’t right.",
-      "Nissi breaks up with her on the 21st of May. On the 22nd he tells Kaylee how he felt and she says she likes him too. The next day they start dating but fate had other plans.",
-      "To be continued..."
+      `The story introduces us to our two main characters Nissi the Senior and Kaylee the junior year student,
+       both regular high school students learning to navigate through teen life while dealing with school and everyday life.
+       Nissi and Kaylee had never talked before but little did they know one call was going to change their lives forever.
+       Nissi was on a call with his friend Simba and his girlfriend.
+       They added a girl Nissi had thought was cute in the past, but he knew his friend Nolan wanted a girlfriend, so he put his feelings aside to help Nolan.`,
+
+      `He starts trying to get them together. One thing leads to the other.
+       Nissi and Kaylee start texting and Nissi is falling for her more and more but keeps neglecting it because Nolan now wants Kaylee.
+       As we go further Nissi and Kaylee now hb and hg.
+       Nissi looks out for Kaylee, gets worried about her.
+       Kaylee still doesn’t show any interest in Nissi and starts moving to Nolan.`,
+
+      `Nolan starts flexing to Simba and Nissi his texts with Kaylee.
+       Nissi always gets jealous and mad at how Nolan doesn’t value her.
+       He bottles his emotions and tries to push her away but keeps failing.
+       One day his other hg tells him her friend likes him.
+       Nissi sees this as a distraction from Kaylee and texts her.`,
+
+      `Two days later the girl immediately asks him to be her boyfriend.
+       Nissi is taken aback by this but agrees in the heat of the moment.
+       Nissi starts dating her.
+       During this he realises he made a mistake.
+       The girl barely talks to him, she is always out.`,
+
+      `Nissi breaks up with her on the 21st of May.
+       On the 22nd he tells Kaylee how he felt and she says she likes him too.
+       The next day they start dating but fate had other plans.
+       To be continued...`
     ];
 
     let currentPage = 0;
@@ -194,8 +197,17 @@
     }
 
     function showSpread() {
-      leftPage.textContent = storyPages[currentPage] || "";
-      rightPage.textContent = storyPages[currentPage+1] || "";
+      leftPage.innerHTML = `
+        <div>${storyPages[currentPage] || ""}</div>
+        <div style="position:absolute;bottom:10px;right:20px;font-size:0.9em;color:#555;">
+          Page ${currentPage+1}
+        </div>`;
+      
+      rightPage.innerHTML = `
+        <div>${storyPages[currentPage+1] || ""}</div>
+        <div style="position:absolute;bottom:10px;right:20px;font-size:0.9em;color:#555;">
+          Page ${currentPage+2}
+        </div>`;
     }
 
     door.onclick = () => {
@@ -229,7 +241,6 @@
     };
 
     closeBtn.onclick = () => {
-      reader.style.display
       reader.style.display = "none";
       library.style.display = "block";
     };
